@@ -1,8 +1,38 @@
 'use client';
 import React, { useState } from 'react';
 
-const Menu = () => {
+interface MenuProps {
+  onSearchChange: (query: string) => void;
+  onLocationChange: (location: string) => void;
+  onJobTypeChange: (jobType: string) => void;
+}
+
+const Menu = ({ onSearchChange, onLocationChange, onJobTypeChange }: MenuProps) => {
   const [salary, setSalary] = useState<number>(50000);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [locationQuery, setLocationQuery] = useState('');
+  const [jobTypeQuery, setJobTypeQuery] = useState('');
+
+  const jobTypes = ['FullTime', 'PartTime', 'Internship'];
+  const locationTypes = ['Onsite', 'Hybrid', 'WorkFromHome', 'Remote'];
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    onSearchChange(value);
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setLocationQuery(value);
+    onLocationChange(value);
+  };
+
+  const handleJobTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setJobTypeQuery(value);
+    onJobTypeChange(value);
+  };
 
   return (
     <div className="w-full p-2 mt-8 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
@@ -28,8 +58,10 @@ const Menu = () => {
             </div>
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search By Job Title, Role"
               className="flex-1 px-3 py-2 rounded-md focus:outline-none"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </div>
         </div>
@@ -61,27 +93,18 @@ const Menu = () => {
                 />
               </svg>
             </div>
-            <input
-              type="text"
-              placeholder="Preferred Location"
-              className="flex-1 px-3 py-2 rounded-md focus:outline-none"
-            />
-            <div className="absolute right-3 text-gray-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
+            <select
+              className="flex-1 px-3 py-2 rounded-md focus:outline-none bg-white"
+              value={locationQuery}
+              onChange={handleLocationChange}
+            >
+              <option value="">Preferred Location</option>
+              {locationTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -106,27 +129,18 @@ const Menu = () => {
                 />
               </svg>
             </div>
-            <input
-              type="text"
-              placeholder="Job type"
-              className="flex-1 px-3 py-2 rounded-md focus:outline-none"
-            />
-            <div className="absolute right-3 text-gray-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
+            <select
+              className="flex-1 px-3 py-2 rounded-md focus:outline-none bg-white"
+              value={jobTypeQuery}
+              onChange={handleJobTypeChange}
+            >
+              <option value="">Job type</option>
+              {jobTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

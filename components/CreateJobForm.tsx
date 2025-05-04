@@ -4,13 +4,7 @@ import { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
-export const CreateJobForm = ({
-  isOpen,
-  onSuccess,
-}: {
-  isOpen: boolean;
-  onSuccess?: () => void;
-}) => {
+export const CreateJobForm = ({ isOpen, onSuccess }: { isOpen: boolean; onSuccess?: () => void }) => {
   const [isVisible, setIsVisible] = useState(isOpen);
   const [formData, setFormData] = useState({
     title: '',
@@ -25,18 +19,32 @@ export const CreateJobForm = ({
 
   useEffect(() => {
     setIsVisible(isOpen);
+    // Load draft from localStorage (if exists)
+    const savedData = sessionStorage.getItem('jobFormDraft');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
   }, [isOpen]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const updatedData = { ...prev, [name]: value };
+      // Save the updated form data to sessionStorage
+      sessionStorage.setItem('jobFormDraft', JSON.stringify(updatedData));
+      return updatedData;
+    });
   };
 
   const handleClose = () => {
     setIsVisible(false);
     onSuccess?.();
+  };
+
+  const handleSaveDraft = () => {
+    sessionStorage.setItem('jobFormDraft', JSON.stringify(formData)); // Save form data to sessionStorage
+    alert('Job draft saved!');
+    handleClose();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,6 +59,7 @@ export const CreateJobForm = ({
       });
 
       alert('Job posted successfully!');
+      sessionStorage.removeItem('jobFormDraft'); // Clear draft after submission
       handleClose();
     } catch (error) {
       console.error('Error adding job:', error);
@@ -178,9 +187,9 @@ export const CreateJobForm = ({
             <button
               type="button"
               className="px-4 py-2 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors"
-              onClick={handleClose}
+              onClick={handleSaveDraft}
             >
-              Cancel
+              Save Draft
             </button>
             <button
               type="submit"
