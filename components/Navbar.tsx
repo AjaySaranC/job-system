@@ -72,13 +72,13 @@ export default function Navbar({ onOpenFormAction }: { onOpenFormAction: () => v
               <>
                 <button
                   onClick={handleCreateJobClick}
-                  className="absolute inset-0 bg-gradient-to-r from-[#0b75ff] to-[#3d36fb] text-white w-full h-full transition-transform duration-300 transform group-hover:-translate-y-full"
+                  className="absolute inset-0 bg-gradient-to-b from-[#9420EE] to-[#730bc4] text-white w-full h-full transition-transform duration-300 transform group-hover:-translate-y-full"
                 >
                   Create Job
                 </button>
                 <button
                   onClick={toggleModal}
-                  className="absolute inset-0 bg-gradient-to-r from-[#0b75ff] to-[#3d36fb] text-white w-full h-full transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
+                  className="absolute inset-0 bg-gradient-to-b from-[#9420EE] to-[#730bc4] text-white w-full h-full transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
                 >
                   Login
                 </button>
@@ -97,7 +97,7 @@ export default function Navbar({ onOpenFormAction }: { onOpenFormAction: () => v
           {user && (
             <button
               onClick={handleLogout}
-              className="ml-4 px-4 py-2 rounded-full bg-gradient-to-r from-[#ff5722] to-[#f44336] text-white transition-colors hover:opacity-90"
+              className="ml-4 px-4 py-2 rounded-full bg-gradient-to-r from-[#0b75ff] to-[#3d36fb] text-white transition-colors hover:opacity-90"
             >
               Log Out
             </button>

@@ -81,7 +81,7 @@ export default function Jobtab({ searchQuery, locationQuery, jobTypeQuery }: Job
                     className="w-16 h-16 rounded-full object-contain"
                   />
                 </div>
-                <div className="bg-blue-200 text-black text-base px-2 py-0.5 rounded">
+                <div className="bg-[#B0D9FF] text-black text-base px-2 py-0.5 rounded">
                   {job.posted}
                 </div>
               </div>
@@ -106,7 +106,7 @@ export default function Jobtab({ searchQuery, locationQuery, jobTypeQuery }: Job
                 <li key={idx}>{line}</li>
               ))}
             </ul>
-            <button className="mt-4 bg-blue-500 text-white py-2 px-6 w-full rounded-md hover:bg-blue-600">
+            <button className="mt-4 bg-[#00AAFF] text-white py-2 px-6 w-full rounded-md hover:bg-blue-600">
               Apply Now
             </button>
           </div>
